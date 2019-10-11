@@ -83,8 +83,6 @@ public class MemoryLogic {
         Collections.shuffle(theCards);
     }
 
-   
-
     /**
      * Main logic of the game. Checks if chosencard is null, nothing happens if
      * the state of the selected card isn't hidden Increases active players
@@ -107,7 +105,7 @@ public class MemoryLogic {
 
                 } else {
                     player2.addPoint();
-                     
+
                 }
             }
         } else {
@@ -117,79 +115,71 @@ public class MemoryLogic {
             changeActivePlayer();
         }
     }
-    
-        
-       
 
-        
-        /*
+    /*
 Checks if we have a winner, and if we do, add it to highscore
 If we have a winner state is set to inactive
 Meant to be used after every instance of chooseCard
-*/
-
-public void checkForWinner() {
-    if(checkForUnMatchedCards()==false){
-                    highscore.add(getWinner());
-                    sortAndTrimHighscoreList();
-                    state=GameState.INACTIVE;
-                }
-}
-
-
-private void changeActivePlayer() {
-    if(activePlayer==player1) {
-        activePlayer=player2;
+     */
+    public void checkForWinner() {
+        if (checkForUnMatchedCards() == false) {
+            highscore.add(getWinner());
+            sortAndTrimHighscoreList();
+            state = GameState.INACTIVE;
+        }
     }
-    else {
-        activePlayer=player1;
-    }
-}
 
-public boolean match (Card otherCard){
+    private void changeActivePlayer() {
+        if (activePlayer == player1) {
+            activePlayer = player2;
+        } else {
+            activePlayer = player1;
+        }
+    }
+
+    public boolean match(Card otherCard) {
         return this.ChosenCard.equals(otherCard);
-}
+    }
 
-/*
+    /*
 Sorts the highscore list by the points of the Player using the compareTo method in Comparable interface
 If there is more than 10 Player in the list the Player with the fewest points will be removed until there are 10 Player left.
-*/
-
-public void sortAndTrimHighscoreList() {
-    Collections.sort(highscore);
-    if(highscore.size()>10){
-        for (int i=11; i<highscore.size(); i++) {
-            highscore.remove(i);
+     */
+    public void sortAndTrimHighscoreList() {
+        Collections.sort(highscore);
+        if (highscore.size() > 10) {
+            for (int i = 11; i < highscore.size(); i++) {
+                highscore.remove(i);
+            }
         }
     }
-}
 
-public Player getWinner() {
-    state=GameState.INACTIVE;
-    if(player2.getPoints()>player1.getPoints()) {
-        return player2;
-    }
-    else return player1;
-}
-
-
-@Override
-        public String toString() {
- 
-    String info = "Secret : ";
-    return "test";
-}
-
-
-private boolean checkForUnMatchedCards() {
-    int noOfUnmatchedCards=0;
-    for (int i=0; i<theCards.size(); i++) {
-        if(theCards.get(i).getState()!=CardState.MATCHED) {
-            noOfUnmatchedCards=noOfUnmatchedCards+1;
+    public Player getWinner() {
+        state = GameState.INACTIVE;
+        if (player2.getPoints() > player1.getPoints()) {
+            return player2;
+        } else {
+            return player1;
         }
     }
+
+    @Override
+    public String toString() {
+        String info = "";
+        for (int i = 0; i < theCards.size(); i++) {
+            info += theCards.get(i).getValue() + " ,";
+        }
+        return info;
+    }
+
+    private boolean checkForUnMatchedCards() {
+        int noOfUnmatchedCards = 0;
+        for (int i = 0; i < theCards.size(); i++) {
+            if (theCards.get(i).getState() != CardState.MATCHED) {
+                noOfUnmatchedCards = noOfUnmatchedCards + 1;
+            }
+        }
         return noOfUnmatchedCards != 0;
-}
-
+    }
 
 }
