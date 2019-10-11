@@ -102,16 +102,10 @@ public class MemoryLogic {
                 ChosenCard = null;
                 if (activePlayer == player1) {
                     player1.addPoint();
-                    if (checkForUnMatchedCards() == false) {
-                        highscore.add(getWinner());
-                        sortAndTrimHighscoreList();
-                    }
+                    
                 } else {
                     player2.addPoint();
-                    if (checkForUnMatchedCards() == false) {
-                        highscore.add(getWinner());
-                        sortAndTrimHighscoreList();
-                    }
+                    
                 }
             } else {
                 ChosenCard.ChangeStateToHidden();
@@ -121,6 +115,25 @@ public class MemoryLogic {
             }
         }
     }
+        
+       
+
+        
+        /*
+Checks if we have a winner, and if we do, add it to highscore
+If we have a winner state is set to inactive
+Meant to be used after every instance of chooseCard
+*/
+
+public void checkForWinner() {
+    if(checkForUnMatchedCards()==false){
+                    highscore.add(getWinner());
+                    sortAndTrimHighscoreList();
+                    state=GameState.INACTIVE;
+                }
+}
+
+    
 
     private void changeActivePlayer() {
         if (activePlayer == player1) {
