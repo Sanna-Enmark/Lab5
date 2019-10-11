@@ -61,7 +61,7 @@ public class MemoryLogic {
         ArrayList<Card> newCards = new ArrayList<>();
         for (int i = 0; i < this.gameSize / 2; i++) {
             for (int j = 0; j < 2; j++) {
-                Card a = new Card(j, this.type);
+                Card a = new Card(i, this.type);
                 newCards.add(a);
             }
         }
