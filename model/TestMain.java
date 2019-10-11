@@ -23,7 +23,8 @@ public class TestMain {
     		
     		switch(choice) {
     			case 'A':	startNewGame(); break;
-    			case 'B':	doThat(); break;
+    			case 'B':	getActivePlayer(); break;
+                        case 'C':       chooseCards(); break;
     			case 'X':	System.out.println("Bye, bye!"); break;
     			default: 	System.out.println("Unknown command");
     		}
@@ -32,21 +33,26 @@ public class TestMain {
     }
 
     public void startNewGame() {
-    	System.out.println("Doing this...");
         System.out.println(game.toString());
-        
-        
-        
+    }
+    
+    public void chooseCards() {
+        System.out.println("Enter the number of the card you would like to check (1-"+game.getGameSize()+"): ");
+        int choice=Integer.parseInt(scanLine())-1;
+        game.chooseCard(choice);
+        System.out.println(game.getChosenCard().toString());
     }
 
-    public void doThat() {
-    	System.out.println("Doing that...");
+    public void getActivePlayer() {
+    	System.out.println(game.getActivePlayer().toString());
     }
     
     public void printMenu() {
     	System.out.println("---Menu---");
-    	System.out.println("A Do This");
-    	System.out.println("B Do That");
+        System.out.println("Active player is: " + game.getActivePlayer().toString());
+    	System.out.println("A Display all game info");
+    	System.out.println("B Display active player");
+        System.out.println("C Choose a card");
     	System.out.println("X Exit");
     	System.out.println("----------");
     }

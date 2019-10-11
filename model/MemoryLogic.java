@@ -153,6 +153,18 @@ If there is more than 10 Player in the list the Player with the fewest points wi
             }
         }
     }
+    
+    public Player getActivePlayer(){
+        return activePlayer;
+    }
+    
+    public int getGameSize() {
+        return gameSize;
+    }
+    
+    public Card getChosenCard(){
+        return this.ChosenCard;
+    }
 
     public Player getWinner() {
         state = GameState.INACTIVE;

@@ -47,4 +47,10 @@ public class Card {
     public CardState getState(){
         return state;
     }
+    
+    @Override
+    public String toString(){
+        String info= "Value: " +this.value+ " Status: " +this.state;
+        return info;
+    }
 }
