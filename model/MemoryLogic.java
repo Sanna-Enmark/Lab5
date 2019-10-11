@@ -95,6 +95,10 @@ public void chooseCard(int index) {
             ChosenCard=null;
             if (activePlayer==player1) {
                 player1.addPoint();
+                if(checkForUnMatchedCards()==false){
+                    highscore.add(getWinner());
+                    sortAndTrimHighscoreList();
+                }
             }
             else {
                 player2.addPoint();
