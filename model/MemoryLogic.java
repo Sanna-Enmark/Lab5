@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package Lab5.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -99,17 +99,11 @@ public void chooseCard(int index) {
             ChosenCard=null;
             if (activePlayer==player1) {
                 player1.addPoint();
-                if(checkForUnMatchedCards()==false){
-                    highscore.add(getWinner());
-                    sortAndTrimHighscoreList();
-                }
+                
             }
             else {
                 player2.addPoint();
-                if(checkForUnMatchedCards()==false){
-                    highscore.add(getWinner());
-                    sortAndTrimHighscoreList();
-                }
+                
             }
         }
         else {
@@ -119,6 +113,20 @@ public void chooseCard(int index) {
             changeActivePlayer();
         }
     }
+}
+
+/*
+Checks if we have a winner, and if we do, add it to highscore
+If we have a winner state is set to inactive
+Meant to be used after every instance of chooseCard
+*/
+
+public void checkForWinner() {
+    if(checkForUnMatchedCards()==false){
+                    highscore.add(getWinner());
+                    sortAndTrimHighscoreList();
+                    state=GameState.INACTIVE;
+                }
 }
 
 private void changeActivePlayer() {
