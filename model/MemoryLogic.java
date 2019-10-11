@@ -130,12 +130,36 @@ public boolean match (Card otherCard){
         return this.ChosenCard.equals(otherCard);
 }
 
+/*
+Sorts the highscore list by the points of the Player using the compareTo method in Comparable interface
+If there is more than 10 Player in the list the Player with the fewest points will be removed until there are 10 Player left.
+*/
+
+public void sortAndTrimHighscoreList() {
+    Collections.sort(highscore);
+    if(highscore.size()>10){
+        for (int i=11; i<highscore.size(); i++) {
+            highscore.remove(i);
+        }
+    }
+}
+
 public Player getWinner() {
     state=GameState.INACTIVE;
     if(player2.getPoints()>player1.getPoints()) {
         return player2;
     }
     else return player1;
+}
+
+private boolean checkForUnMatchedCards() {
+    int noOfUnmatchedCards=0;
+    for (int i=0; i<theCards.size(); i++) {
+        if(theCards.get(i).getState()!=CardState.MATCHED) {
+            noOfUnmatchedCards=noOfUnmatchedCards+1;
+        }
+    }
+        return noOfUnmatchedCards != 0;
 }
 
 }
