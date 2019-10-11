@@ -33,7 +33,7 @@ public class TestMain {
 
     public void startNewGame() {
     	System.out.println("Doing this...");
-        
+        System.out.println(game.toString());
         
         
         
