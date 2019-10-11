@@ -8,11 +8,16 @@ package view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import model.MemoryLogic;
 
 /**
@@ -32,7 +37,13 @@ public class MemoryView extends VBox {
     }
 
     private GridPane initMainView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            	GridPane gridPane = new GridPane();
+    	
+    	gridPane.setPadding(new Insets(20, 20, 20, 20));
+    	gridPane.setVgap(10);
+    	gridPane.setHgap(10);
+
+        return gridPane;
     }
 
     private void addEventHandlers(MemoryController controller) {
@@ -47,11 +58,15 @@ public class MemoryView extends VBox {
                 MenuItem RulesItem= new MenuItem("Show Rules");
 		MenuItem QuitItem = new MenuItem("Quit");
                  
-		QuitItem.setOnAction(new EventHandler<ActionEvent>() {
+                RulesItem.setOnAction(new EventHandler<ActionEvent>() {                    
 			@Override
 			public void handle(ActionEvent event) {
-				Platform.exit();
+				System.out.println("Showing Rules");
 			}
+                }
+                )
+                
+		QuitItem.setOnAction(new EventHandler<ActionEvent>() {
 		});
 		Menu fileMenu = new Menu("File");
 		fileMenu.getItems().addAll(NewGameItem,ResetItem,HighScoreItem,RulesItem,QuitItem);
@@ -61,6 +76,8 @@ public class MemoryView extends VBox {
 		
 		return menuBar;
     }
+    
+    
 
     private void updateFromModel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
