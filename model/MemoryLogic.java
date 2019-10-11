@@ -13,6 +13,9 @@ import java.util.Collections;
  * 
  * still lacks a method to check if there are any unmatched cards in the arraylist
  * 
+ * this version has a method to check for unmatched cards, and uses it to know when to check for a winner.
+ * Winner is then added to the highscore list
+ *
  * @author senma
  */
 public class MemoryLogic {
@@ -31,24 +34,28 @@ public class MemoryLogic {
  * Scans for gamesize, cardtype, and name of the players - all chosen by the user
  * throws illegalargumentexception if size is an odd number
  * generates an arraylist of cards with matching pairs (value!) and shuffles them in an arraylist.
+     * @param size
+     * @param type
+     * @param player1
+     * @param player2
  */
     
 public MemoryLogic(int size, CardType type, String player1, String player2){
     if(size%2 == 0) this.gameSize=size;
         else throw new IllegalArgumentException("Size needs to be even");    
     this.type=type;
-    theCards=new ArrayList<Card>(generateTheCards());
+    theCards=new ArrayList<>(generateTheCards());
     this.player1=new Player(player1);
     this.player2=new Player(player2);
     this.state=GameState.ACTIVE;
-    highscore= new ArrayList<Player>();
+    highscore= new ArrayList<>();
     resetGame();
 }
 
 
 
 private ArrayList<Card> generateTheCards() {
-    ArrayList<Card> newCards=new ArrayList<Card>();
+    ArrayList<Card> newCards=new ArrayList<>();
     for(int i=0; i<this.gameSize/2; i++){
         for(int j=0; j<2; j++) {
             Card a= new Card(j,this.type);
@@ -92,9 +99,17 @@ public void chooseCard(int index) {
             ChosenCard=null;
             if (activePlayer==player1) {
                 player1.addPoint();
+                if(checkForUnMatchedCards()==false){
+                    highscore.add(getWinner());
+                    sortAndTrimHighscoreList();
+                }
             }
             else {
                 player2.addPoint();
+                if(checkForUnMatchedCards()==false){
+                    highscore.add(getWinner());
+                    sortAndTrimHighscoreList();
+                }
             }
         }
         else {
@@ -119,6 +134,20 @@ public boolean match (Card otherCard){
         return this.ChosenCard.equals(otherCard);
 }
 
+/*
+Sorts the highscore list by the points of the Player using the compareTo method in Comparable interface
+If there is more than 10 Player in the list the Player with the fewest points will be removed until there are 10 Player left.
+*/
+
+public void sortAndTrimHighscoreList() {
+    Collections.sort(highscore);
+    if(highscore.size()>10){
+        for (int i=11; i<highscore.size(); i++) {
+            highscore.remove(i);
+        }
+    }
+}
+
 public Player getWinner() {
     state=GameState.INACTIVE;
     if(player2.getPoints()>player1.getPoints()) {
@@ -127,13 +156,24 @@ public Player getWinner() {
     else return player1;
 }
 
+
 @Override
 public String toString() {
  
     String info = "Secret : ";
+    return "test";
 }
 
 
+private boolean checkForUnMatchedCards() {
+    int noOfUnmatchedCards=0;
+    for (int i=0; i<theCards.size(); i++) {
+        if(theCards.get(i).getState()!=CardState.MATCHED) {
+            noOfUnmatchedCards=noOfUnmatchedCards+1;
+        }
+    }
+        return noOfUnmatchedCards != 0;
+}
 
 
 }
