@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author senma
  */
-public class Player implements Serializable, Comparable{
+public class Player implements Serializable, Comparable<Player>{
 
     private final String name;
     private int points;
@@ -53,15 +53,14 @@ public class Player implements Serializable, Comparable{
     
     /*
     Compares two objects of the type Player by their points.
-    Returns 0 if the points are equal or if the object being compared is not a Player.
+    Returns 0 if the points are equal
     */
 
     @Override
-    public int compareTo(Object o) {
-        if( o instanceof Player){
-            return this.points-((Player) o).points;
-        }
-        else return 0;
+    public int compareTo(Player other)  {
+        
+            return this.points-other.points;
+        
     }
 
 }
