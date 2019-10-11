@@ -16,9 +16,11 @@ public class MemoryController {
         this.view = view;
     }
     
+    protected void handleCardSelectionEvent() {
+    }
     
-    
-    
+    protected void handleResetEvent (){
+    }
     
     
 }
