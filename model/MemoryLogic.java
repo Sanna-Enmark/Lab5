@@ -34,24 +34,28 @@ public class MemoryLogic {
  * Scans for gamesize, cardtype, and name of the players - all chosen by the user
  * throws illegalargumentexception if size is an odd number
  * generates an arraylist of cards with matching pairs (value!) and shuffles them in an arraylist.
+     * @param size
+     * @param type
+     * @param player1
+     * @param player2
  */
     
 public MemoryLogic(int size, CardType type, String player1, String player2){
     if(size%2 == 0) this.gameSize=size;
         else throw new IllegalArgumentException("Size needs to be even");    
     this.type=type;
-    theCards=new ArrayList<Card>(generateTheCards());
+    theCards=new ArrayList<>(generateTheCards());
     this.player1=new Player(player1);
     this.player2=new Player(player2);
     this.state=GameState.ACTIVE;
-    highscore= new ArrayList<Player>();
+    highscore= new ArrayList<>();
     resetGame();
 }
 
 
 
 private ArrayList<Card> generateTheCards() {
-    ArrayList<Card> newCards=new ArrayList<Card>();
+    ArrayList<Card> newCards=new ArrayList<>();
     for(int i=0; i<this.gameSize/2; i++){
         for(int j=0; j<2; j++) {
             Card a= new Card(j,this.type);
