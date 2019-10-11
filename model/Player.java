@@ -50,5 +50,18 @@ public class Player implements Serializable, Comparable{
         String info= "Name: " + name+ ", Points: " + points;
         return info;
     }
+    
+    /*
+    Compares two objects of the type Player by their points.
+    Returns 0 if the points are equal or if the object being compared is not a Player.
+    */
+
+    @Override
+    public int compareTo(Object o) {
+        if( o instanceof Player){
+            return this.points-((Player) o).points;
+        }
+        else return 0;
+    }
 
 }
