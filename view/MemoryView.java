@@ -57,16 +57,41 @@ public class MemoryView extends VBox {
                 MenuItem HighScoreItem = new MenuItem("Show HighScore");
                 MenuItem RulesItem= new MenuItem("Show Rules");
 		MenuItem QuitItem = new MenuItem("Quit");
-                 
-                RulesItem.setOnAction(new EventHandler<ActionEvent>() {                    
-			@Override
+                
+                NewGameItem.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
 			public void handle(ActionEvent event) {
-				System.out.println("Showing Rules");
+				System.out.println("Starting new game");
 			}
-                }
-                )
+                });
+                
+                ResetItem.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+			public void handle(ActionEvent event) {
+				System.out.println("Resets game");
+			}
+                });
+                
+                HighScoreItem.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+			public void handle(ActionEvent event) {
+				System.out.println("Showing high scores");
+			}
+                });
+                
+                RulesItem.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+			public void handle(ActionEvent event) {
+				System.out.println("Showing rules");
+			}
+                });
+                
                 
 		QuitItem.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Platform.exit();
+			}
 		});
 		Menu fileMenu = new Menu("File");
 		fileMenu.getItems().addAll(NewGameItem,ResetItem,HighScoreItem,RulesItem,QuitItem);
