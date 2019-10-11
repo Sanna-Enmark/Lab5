@@ -102,6 +102,10 @@ public void chooseCard(int index) {
             }
             else {
                 player2.addPoint();
+                if(checkForUnMatchedCards()==false){
+                    highscore.add(getWinner());
+                    sortAndTrimHighscoreList();
+                }
             }
         }
         else {
