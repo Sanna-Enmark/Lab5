@@ -13,6 +13,9 @@ import java.util.Collections;
  * 
  * still lacks a method to check if there are any unmatched cards in the arraylist
  * 
+ * this version has a method to check for unmatched cards, and uses it to know when to check for a winner.
+ * Winner is then added to the highscore list
+ *
  * @author senma
  */
 public class MemoryLogic {
