@@ -127,4 +127,13 @@ public Player getWinner() {
     else return player1;
 }
 
+@Override
+public String toString() {
+ 
+    String info = "Secret : ";
+}
+
+
+
+
 }
