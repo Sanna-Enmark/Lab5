@@ -11,7 +11,6 @@ import java.io.Serializable;
  *
  * @author senma
  */
-public class Player implements Serializable{
 
     private final String name;
     private int points;
