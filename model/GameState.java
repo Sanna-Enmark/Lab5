@@ -1,4 +1,4 @@
-package Lab5.model;
+package model;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

@@ -1,5 +1,5 @@
 
-package Lab5.model;
+package model;
 import java.util.Scanner;
 
 public class TestMain {
