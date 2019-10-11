@@ -27,7 +27,7 @@ public class MemoryLogic {
     private GameState state;
     private ArrayList<Player> highscore;
     private ArrayList<Card> theCards;
-    private Card ChosenCard;
+    private Card chosenCard;
     
 
 /**
@@ -58,7 +58,7 @@ private ArrayList<Card> generateTheCards() {
     ArrayList<Card> newCards=new ArrayList<>();
     for(int i=0; i<this.gameSize/2; i++){
         for(int j=0; j<2; j++) {
-            Card a= new Card(j,this.type);
+            Card a= new Card(i,this.type);
             newCards.add(a);
         }
     }
@@ -74,7 +74,7 @@ public void resetGame() {
     this.activePlayer=this.player1;
     player1.resetPoints();
     player2.resetPoints();
-    ChosenCard=null;
+    chosenCard=null;
     for(int i=0; i<theCards.size();i++){
         theCards.get(i).ChangeStateToHidden();
     }
@@ -88,15 +88,15 @@ public void resetGame() {
  */
 
 public void chooseCard(int index) {
-    if(this.ChosenCard==null && theCards.get(index).getState()==CardState.HIDDEN){
-        ChosenCard=theCards.get(index);
-        ChosenCard.ChangeStateToRevealed();
+    if(this.chosenCard==null && theCards.get(index).getState()==CardState.HIDDEN){
+        chosenCard=theCards.get(index);
+        chosenCard.ChangeStateToRevealed();
     }
     else if(theCards.get(index).getState()==CardState.HIDDEN) {
         if(match(theCards.get(index))) {
-            ChosenCard.ChangeStateToMatched();
+            chosenCard.ChangeStateToMatched();
             theCards.get(index).ChangeStateToMatched();
-            ChosenCard=null;
+            chosenCard=null;
             if (activePlayer==player1) {
                 player1.addPoint();
                 
@@ -107,9 +107,9 @@ public void chooseCard(int index) {
             }
         }
         else {
-            ChosenCard.ChangeStateToHidden();
+            chosenCard.ChangeStateToHidden();
             theCards.get(index).ChangeStateToHidden();
-            ChosenCard=null;
+            chosenCard=null;
             changeActivePlayer();
         }
     }
@@ -139,7 +139,7 @@ private void changeActivePlayer() {
 }
 
 public boolean match (Card otherCard){
-        return this.ChosenCard.equals(otherCard);
+        return this.chosenCard.equals(otherCard);
 }
 
 /*
