@@ -58,11 +58,15 @@ public class MemoryView extends VBox {
                 MenuItem RulesItem= new MenuItem("Show Rules");
 		MenuItem QuitItem = new MenuItem("Quit");
                  
-		QuitItem.setOnAction(new EventHandler<ActionEvent>() {
+                RulesItem.setOnAction(new EventHandler<ActionEvent>() {                    
 			@Override
 			public void handle(ActionEvent event) {
-				Platform.exit();
+				System.out.println("Showing Rules");
 			}
+                }
+                )
+                
+		QuitItem.setOnAction(new EventHandler<ActionEvent>() {
 		});
 		Menu fileMenu = new Menu("File");
 		fileMenu.getItems().addAll(NewGameItem,ResetItem,HighScoreItem,RulesItem,QuitItem);
