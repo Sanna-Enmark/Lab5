@@ -1,13 +1,28 @@
 
 package model;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class TestMain {
 
     private MemoryLogic game;
+    private MemoryIO IO;
 
-    public TestMain() {
+    public TestMain() throws Exception {
     	game = new MemoryLogic(8, CardType.NUMBER, "Jesser", "Sanna" );
+        IO= new MemoryIO();
+        if (fileExists()) {
+            try {
+                game.setHighScore(IO.deSerializeFromFile("HighScore"));
+            } catch (Exception ex) {
+                System.out.println("An exception was found");
+                throw ex;
+            }
+            System.out.println("Loading successful");
+        }
     }
     
     // main loop
@@ -25,7 +40,7 @@ public class TestMain {
     			case 'A':	startNewGame(); break;
     			case 'B':	getActivePlayer(); break;
                         case 'C':       chooseCards(); break;
-    			case 'X':	System.out.println("Bye, bye!"); break;
+    			case 'X':	saveAndQuit(); break;
     			default: 	System.out.println("Unknown command");
     		}
     		
@@ -47,8 +62,33 @@ public class TestMain {
         if(game.getGameState()==GameState.INACTIVE){
             System.out.println(game.getWinner().toString()+ " won!");
         }
-        
-        
+       
+    }
+    
+    public void saveAndQuit(){
+        saveToFile();
+        System.out.println("Bye, bye!");
+    }
+    
+    public void saveToFile() {
+        try {
+            IO.serializeToFile("HighScore", game.getHighscore());
+        } catch (Exception ex) {
+            System.out.println("An exception was found");
+            
+        }
+        System.out.println("Saving complete");
+
+    }
+    
+    private static boolean fileExists() {
+        Path filePath = Paths.get("C:\\Users\\senma\\Documents\\NetBeansProjects\\Lab5\\HighScore.txt");
+        if (Files.exists(filePath, new LinkOption[0])) {
+            return true;
+        } else {
+            System.out.println("File doesn't exist. A new file will be created");
+            return false;
+        }
     }
 
     public void getActivePlayer() {
@@ -73,8 +113,9 @@ public class TestMain {
         return scan.nextLine();
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
     	TestMain menu = new TestMain();
+        
     	menu.run();
     }
 }

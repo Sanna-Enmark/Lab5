@@ -56,6 +56,10 @@ public class MemoryLogic {
         highscore = new ArrayList<>();
         resetGame();
     }
+    
+    public void setHighScore(ArrayList<Player> fromfile){
+        this.highscore=fromfile;
+    }
 
     private ArrayList<Card> generateTheCards() {
         ArrayList<Card> newCards = new ArrayList<>();
