@@ -108,12 +108,13 @@ public class MemoryLogic {
 
                 }
             }
-        } else {
+            else {
             ChosenCard.ChangeStateToHidden();
             theCards.get(index).ChangeStateToHidden();
             ChosenCard = null;
             changeActivePlayer();
         }
+        } 
     }
 
     /*
@@ -128,6 +129,10 @@ Meant to be used after every instance of chooseCard
             state = GameState.INACTIVE;
         }
     }
+    
+    public ArrayList<Player> getHighscore(){
+        return highscore;
+    }
 
     private void changeActivePlayer() {
         if (activePlayer == player1) {
@@ -136,9 +141,17 @@ Meant to be used after every instance of chooseCard
             activePlayer = player1;
         }
     }
+    
+    public Card getCard(int index){
+        return theCards.get(index);
+    }
 
     public boolean match(Card otherCard) {
         return ChosenCard.compareTo(otherCard)==0;
+    }
+    
+    public boolean checkIfHidden(Card c){
+        return c.getState()==CardState.HIDDEN;
     }
 
     /**
@@ -156,6 +169,10 @@ Meant to be used after every instance of chooseCard
     
     public Player getActivePlayer(){
         return activePlayer;
+    }
+    
+    public GameState getGameState(){
+        return state;
     }
     
     public int getGameSize() {

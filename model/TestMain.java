@@ -39,8 +39,16 @@ public class TestMain {
     public void chooseCards() {
         System.out.println("Enter the number of the card you would like to check (1-"+game.getGameSize()+"): ");
         int choice=Integer.parseInt(scanLine())-1;
+        if(game.checkIfHidden(game.getCard(choice))){
+            System.out.println(game.getCard(choice).toString());
+        }
         game.chooseCard(choice);
-        System.out.println(game.getChosenCard().toString());
+        game.checkForWinner();
+        if(game.getGameState()==GameState.INACTIVE){
+            System.out.println(game.getWinner().toString()+ " won!");
+        }
+        
+        
     }
 
     public void getActivePlayer() {
@@ -50,6 +58,9 @@ public class TestMain {
     public void printMenu() {
     	System.out.println("---Menu---");
         System.out.println("Active player is: " + game.getActivePlayer().toString());
+        if(game.getChosenCard() != null) {
+            System.out.println(game.getChosenCard().toString());
+        }
     	System.out.println("A Display all game info");
     	System.out.println("B Display active player");
         System.out.println("C Choose a card");
