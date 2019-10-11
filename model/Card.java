@@ -9,7 +9,7 @@ package model;
  *
  * @author senma
  */
-public class Card {
+public class Card implements Comparable<Card>{
     private int value;
     private CardState state;
     private CardType type;
@@ -52,5 +52,10 @@ public class Card {
     public String toString(){
         String info= "Value: " +this.value+ " Status: " +this.state;
         return info;
+    }
+
+    @Override
+    public int compareTo(Card o) {
+        return this.value-o.value;
     }
 }

@@ -138,7 +138,7 @@ Meant to be used after every instance of chooseCard
     }
 
     public boolean match(Card otherCard) {
-        return this.ChosenCard.equals(otherCard);
+        return ChosenCard.compareTo(otherCard)==0;
     }
 
     /*
