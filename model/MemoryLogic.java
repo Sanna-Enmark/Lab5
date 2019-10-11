@@ -141,9 +141,9 @@ Meant to be used after every instance of chooseCard
         return ChosenCard.compareTo(otherCard)==0;
     }
 
-    /*
-Sorts the highscore list by the points of the Player using the compareTo method in Comparable interface
-If there is more than 10 Player in the list the Player with the fewest points will be removed until there are 10 Player left.
+    /**
+     *  Sorts the highscore list by the points of the Player using the compareTo method in Comparable interface
+     *   If there is more than 10 Player in the list the Player with the fewest points will be removed until there are 10 Player left.
      */
     public void sortAndTrimHighscoreList() {
         Collections.sort(highscore);
