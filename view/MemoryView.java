@@ -31,6 +31,7 @@ public class MemoryView extends VBox {
     private final MemoryLogic model;
     
     private Label currentPlayer;
+    private Button[] theButtons;
     
     public MemoryView (MemoryLogic model){
         this.model=model;
@@ -40,6 +41,13 @@ public class MemoryView extends VBox {
         
         this.currentPlayer=new Label(model.getActivePlayer().toString());
         mainView.add(currentPlayer, 1, 0);
+        
+        theButtons=new Button[model.getGameSize()];
+        
+        for(int i=0; i<model.getGameSize(); i++){
+            theButtons[i]= new Button("Card"+i);
+            mainView.add(theButtons[i], 2, i);
+        }
         
         MenuBar menuBar = createMenues(controller);
         this.getChildren().addAll(menuBar, mainView); // I am a VBox (this)
