@@ -5,6 +5,7 @@ import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.CardType;
 import model.MemoryLogic;
 
 /**
@@ -20,7 +21,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         // create model, view and controller, and tie them together
-        MemoryLogic model = new MemoryLogic();
+        MemoryLogic model = new MemoryLogic(8, CardType.NUMBER, "Jesser", "Sanna");
         MemoryView view = new MemoryView(model); // also creates the controller
 
         // create the window, add the view, and show it

@@ -29,11 +29,11 @@ public class MemoryView extends VBox {
         MemoryController controller = new MemoryController(model, this);
         
         GridPane mainView = initMainView();
-        addEventHandlers(controller);
+        
         MenuBar menuBar = createMenues(controller);
         this.getChildren().addAll(menuBar, mainView); // I am a VBox (this)
 
-        updateFromModel();
+
     }
 
     private GridPane initMainView() {
