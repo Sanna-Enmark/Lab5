@@ -15,7 +15,9 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import model.MemoryLogic;
@@ -25,10 +27,19 @@ import model.MemoryLogic;
  * @author senma
  */
 public class MemoryView extends VBox {
+    
+    private final MemoryLogic model;
+    
+    private Label currentPlayer;
+    
     public MemoryView (MemoryLogic model){
+        this.model=model;
         MemoryController controller = new MemoryController(model, this);
         
         GridPane mainView = initMainView();
+        
+        this.currentPlayer=new Label(model.getActivePlayer().toString());
+        mainView.add(currentPlayer, 1, 0);
         
         MenuBar menuBar = createMenues(controller);
         this.getChildren().addAll(menuBar, mainView); // I am a VBox (this)
@@ -38,7 +49,7 @@ public class MemoryView extends VBox {
 
     private GridPane initMainView() {
             	GridPane gridPane = new GridPane();
-    	
+                   	
     	gridPane.setPadding(new Insets(20, 20, 20, 20));
     	gridPane.setVgap(10);
     	gridPane.setHgap(10);
@@ -105,6 +116,6 @@ public class MemoryView extends VBox {
     
 
     private void updateFromModel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
     }
 }

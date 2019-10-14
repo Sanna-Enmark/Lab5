@@ -26,7 +26,7 @@ public class Main extends Application {
 
         // create the window, add the view, and show it
         Scene scene = new Scene(view);
-        primaryStage.setTitle("Guess My Word");
+        primaryStage.setTitle("Memory");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
