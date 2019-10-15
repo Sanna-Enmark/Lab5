@@ -46,6 +46,12 @@ public class MemoryView extends VBox {
         
         for(int i=0; i<model.getGameSize(); i++){
             theButtons[i]= new Button("Card"+i);
+            theButtons[i].setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+			public void handle(ActionEvent event) {
+				System.out.println("Card is selected");
+			}
+                });
             mainView.add(theButtons[i], 2, i);
         }
         
@@ -88,6 +94,7 @@ public class MemoryView extends VBox {
                     @Override
 			public void handle(ActionEvent event) {
 				System.out.println("Resets game");
+                                model.resetGame();
 			}
                 });
                 
@@ -95,6 +102,7 @@ public class MemoryView extends VBox {
                     @Override
 			public void handle(ActionEvent event) {
 				System.out.println("Showing high scores");
+                                
 			}
                 });
                 
