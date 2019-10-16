@@ -28,9 +28,9 @@ import model.MemoryLogic;
  */
 public class MemoryView extends VBox {
 
-    private final MemoryLogic model;
+    private static MemoryLogic model;
 
-    private Label currentPlayer;
+    private static Label currentPlayer;
     private Button[] theButtons;
 
     public MemoryView(MemoryLogic model) {
@@ -122,8 +122,8 @@ public class MemoryView extends VBox {
         return menuBar;
     }
 
-    private void updateFromModel() {
-        this.currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
+    public static void updateFromModel() {
+        MemoryView.currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
     }
 
     private static class ButtonHandler implements EventHandler<ActionEvent> {
@@ -133,6 +133,7 @@ public class MemoryView extends VBox {
         public ButtonHandler(int i, MemoryLogic model) {
             this.index = i;
             model.chooseCard(index);
+            updateFromModel();
         }
 
         @Override
