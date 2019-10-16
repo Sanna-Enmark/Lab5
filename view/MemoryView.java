@@ -89,6 +89,7 @@ public class MemoryView extends VBox {
             public void handle(ActionEvent event) {
                 System.out.println("Resets game");
                 model.resetGame();
+                updateFromModel();
             }
         });
 
@@ -137,7 +138,7 @@ public class MemoryView extends VBox {
 
         @Override
         public void handle(ActionEvent event) {
-            System.out.println("Pressed button");
+            System.out.println("Pressed button");            
         }
     }
 }
