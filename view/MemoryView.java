@@ -50,7 +50,7 @@ public class MemoryView extends VBox {
         theButtons = new MemoryButton[model.getGameSize()];
 
         for (int i = 0; i < model.getGameSize(); i++) {
-            theButtons[i] = new MemoryButton("Card" + model.getCard(i).getValue(),model.getCard(i).getValue());
+            theButtons[i] = new MemoryButton("Card " + model.getCard(i).getValue(),i);
             mainView.add(theButtons[i], 1+i, 2);
         }
         
@@ -77,9 +77,10 @@ public class MemoryView extends VBox {
             @Override
             public void handle(ActionEvent event) {
             MemoryButton temp = (MemoryButton)event.getSource();
-            System.out.println("Card " + temp.getValue());
-            model.chooseCard(temp.getValue());
+            System.out.println("Card " + temp.getIndex());
+            model.chooseCard(temp.getIndex());
             updateFromModel();
+            
             }
         };
         for (Button i : theButtons){
@@ -116,7 +117,7 @@ public class MemoryView extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Showing high scores");
-                showAlert(model.getHighscore().toString());
+                showAlert("High Scores",model.getHighscore().toString());
 
             }
         });
@@ -126,7 +127,7 @@ public class MemoryView extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Showing rules");
-                showAlert("Active player chooses two cards. \n If the cards matches, the active player gets a point and gets to choose two new cards. \n If the two cards do not match the other player gets a turn");
+                showAlert("Rules:","Active player chooses two cards. \n If the cards matches, the active player gets a point and gets to choose two new cards. \n If the two cards do not match the other player gets a turn");
             }
         });
                 
@@ -146,30 +147,34 @@ public class MemoryView extends VBox {
     }
 
     private void updateFromModel() {
-        currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
+        this.currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
+        if (model.checkForWinner() == true){
+            System.out.println(model.getWinner().toString());
+            showAlert("Result","The winner is " + model.getWinner().toString());
+        }
     }
 
-    private void showAlert(String message) {
+    private void showAlert(String title, String message) {
         
         // TODO - setParent ot similar, to set position relative
         // to main window
         
         alert.setHeaderText("Memory:");
-        alert.setTitle("Rules:");
+        alert.setTitle(title);
         alert.setContentText(message);
         alert.show(); 
     }
     
     private static class MemoryButton extends Button {
-        private int value;
+        private int index;
         
         public MemoryButton(String string, int i) {
             super(string);
-            this.value = i;
+            this.index = i;
         }
         
-        public int getValue (){
-            return value;
+        public int getIndex (){
+            return index;
         }
 
     }

@@ -56,9 +56,9 @@ public class MemoryLogic {
         highscore = new ArrayList<>();
         resetGame();
     }
-    
-    public void setHighScore(ArrayList<Player> fromfile){
-        this.highscore=fromfile;
+
+    public void setHighScore(ArrayList<Player> fromfile) {
+        this.highscore = fromfile;
     }
 
     private ArrayList<Card> generateTheCards() {
@@ -99,26 +99,26 @@ public class MemoryLogic {
         if (this.ChosenCard == null && theCards.get(index).getState() == CardState.HIDDEN) {
             ChosenCard = theCards.get(index);
             ChosenCard.ChangeStateToRevealed();
+
         } else if (theCards.get(index).getState() == CardState.HIDDEN) {
             if (match(theCards.get(index))) {
                 ChosenCard.ChangeStateToMatched();
                 theCards.get(index).ChangeStateToMatched();
                 ChosenCard = null;
+
                 if (activePlayer == player1) {
                     player1.addPoint();
 
                 } else {
                     player2.addPoint();
-
                 }
+            } else {
+                ChosenCard.ChangeStateToHidden();
+                theCards.get(index).ChangeStateToHidden();
+                ChosenCard = null;
+                changeActivePlayer();
             }
-            else {
-            ChosenCard.ChangeStateToHidden();
-            theCards.get(index).ChangeStateToHidden();
-            ChosenCard = null;
-            changeActivePlayer();
         }
-        } 
     }
 
     /*
@@ -126,15 +126,18 @@ Checks if we have a winner, and if we do, add it to highscore
 If we have a winner state is set to inactive
 Meant to be used after every instance of chooseCard
      */
-    public void checkForWinner() {
+    public Boolean checkForWinner() {
         if (checkForUnMatchedCards() == false) {
             highscore.add(getWinner());
             sortAndTrimHighscoreList();
             state = GameState.INACTIVE;
+            return true;
+        } else {
+            return false;
         }
     }
-    
-    public ArrayList<Player> getHighscore(){
+
+    public ArrayList<Player> getHighscore() {
         return highscore;
     }
 
@@ -145,22 +148,24 @@ Meant to be used after every instance of chooseCard
             activePlayer = player1;
         }
     }
-    
-    public Card getCard(int index){
+
+    public Card getCard(int index) {
         return theCards.get(index);
     }
 
     public boolean match(Card otherCard) {
-        return ChosenCard.compareTo(otherCard)==0;
+        return ChosenCard.compareTo(otherCard) == 0;
     }
-    
-    public boolean checkIfHidden(Card c){
-        return c.getState()==CardState.HIDDEN;
+
+    public boolean checkIfHidden(Card c) {
+        return c.getState() == CardState.HIDDEN;
     }
 
     /**
-     *  Sorts the highscore list by the points of the Player using the compareTo method in Comparable interface
-     *   If there is more than 10 Player in the list the Player with the fewest points will be removed until there are 10 Player left.
+     * Sorts the highscore list by the points of the Player using the compareTo
+     * method in Comparable interface If there is more than 10 Player in the
+     * list the Player with the fewest points will be removed until there are 10
+     * Player left.
      */
     public void sortAndTrimHighscoreList() {
         Collections.sort(highscore);
@@ -170,20 +175,20 @@ Meant to be used after every instance of chooseCard
             }
         }
     }
-    
-    public Player getActivePlayer(){
+
+    public Player getActivePlayer() {
         return activePlayer;
     }
-    
-    public GameState getGameState(){
+
+    public GameState getGameState() {
         return state;
     }
-    
+
     public int getGameSize() {
         return gameSize;
     }
-    
-    public Card getChosenCard(){
+
+    public Card getChosenCard() {
         return this.ChosenCard;
     }
 
