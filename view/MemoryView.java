@@ -16,6 +16,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -29,31 +30,31 @@ import model.MemoryLogic;
  */
 public class MemoryView extends VBox {
 
-    private static MemoryLogic model;
+    private MemoryLogic model;
     
     private final Alert alert;
 
-    private static Label currentPlayer;
-    private Button[] theButtons;
+    private Label currentPlayer;
+    private MemoryButton[] theButtons;
 
     public MemoryView(MemoryLogic model) {
         this.model = model;
         this.alert = new Alert(Alert.AlertType.INFORMATION);
         MemoryController controller = new MemoryController(model, this);
-
+        
         GridPane mainView = initMainView();
 
         this.currentPlayer = new Label(model.getActivePlayer().toString());
-        mainView.add(currentPlayer, 1, 0);
+        mainView.add(currentPlayer, 0,0);
 
-        theButtons = new Button[model.getGameSize()];
+        theButtons = new MemoryButton[model.getGameSize()];
 
         for (int i = 0; i < model.getGameSize(); i++) {
-            theButtons[i] = new Button("Card" + i);
-            theButtons[i].setOnAction(new ButtonHandler(i, model));
-            mainView.add(theButtons[i], 2, i);
+            theButtons[i] = new MemoryButton("Card" + model.getCard(i).getValue(),model.getCard(i).getValue());
+            mainView.add(theButtons[i], 1+i, 2);
         }
-
+        
+        addEventHandlers(controller);
         MenuBar menuBar = createMenues(controller);
         this.getChildren().addAll(menuBar, mainView); // I am a VBox (this)
 
@@ -62,15 +63,29 @@ public class MemoryView extends VBox {
     private GridPane initMainView() {
         GridPane gridPane = new GridPane();
 
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
-        gridPane.setVgap(10);
-        gridPane.setHgap(10);
+        gridPane.setPadding(new Insets(10, 20, 20, 20));
+        gridPane.setVgap(8);
+        gridPane.setHgap(5);
 
         return gridPane;
     }
 
     private void addEventHandlers(MemoryController controller) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EventHandler<ActionEvent> CardSelection = new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+            MemoryButton temp = (MemoryButton)event.getSource();
+            System.out.println("Card " + temp.getValue());
+            model.chooseCard(temp.getValue());
+            updateFromModel();
+            }
+        };
+        for (Button i : theButtons){
+            i.setOnAction(CardSelection);
+        }
+        
     }
 
     private MenuBar createMenues(MemoryController controller) {
@@ -115,10 +130,6 @@ public class MemoryView extends VBox {
             }
         });
                 
-
-    
-           
-
         QuitItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -134,8 +145,8 @@ public class MemoryView extends VBox {
         return menuBar;
     }
 
-    public static void updateFromModel() {
-        MemoryView.currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
+    private void updateFromModel() {
+        currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
     }
 
     private void showAlert(String message) {
@@ -149,21 +160,17 @@ public class MemoryView extends VBox {
         alert.show(); 
     }
     
-    private static class ButtonHandler implements EventHandler<ActionEvent> {
-
-        private int index;
-
-        public ButtonHandler(int i, MemoryLogic model) {
-            this.index = i;
-            
-
+    private static class MemoryButton extends Button {
+        private int value;
+        
+        public MemoryButton(String string, int i) {
+            super(string);
+            this.value = i;
+        }
+        
+        public int getValue (){
+            return value;
         }
 
-        @Override
-        public void handle(ActionEvent event) {
-            System.out.println("Pressed button" + index);
-            model.chooseCard(index);
-            updateFromModel();
-        }
     }
 }
