@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -29,12 +30,15 @@ import model.MemoryLogic;
 public class MemoryView extends VBox {
 
     private static MemoryLogic model;
+    
+    private final Alert alert;
 
     private static Label currentPlayer;
     private Button[] theButtons;
 
     public MemoryView(MemoryLogic model) {
         this.model = model;
+        this.alert = new Alert(Alert.AlertType.INFORMATION);
         MemoryController controller = new MemoryController(model, this);
 
         GridPane mainView = initMainView();
@@ -97,16 +101,23 @@ public class MemoryView extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Showing high scores");
+                showAlert(model.getHighscore().toString());
 
             }
         });
 
         RulesItem.setOnAction(new EventHandler<ActionEvent>() {
+            
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Showing rules");
+                showAlert("Active player chooses two cards. \n If the cards matches, the active player gets a point and gets to choose two new cards. \n If the two cards do not match the other player gets a turn");
             }
         });
+                
+
+    
+           
 
         QuitItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -127,6 +138,17 @@ public class MemoryView extends VBox {
         MemoryView.currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
     }
 
+    private void showAlert(String message) {
+        
+        // TODO - setParent ot similar, to set position relative
+        // to main window
+        
+        alert.setHeaderText("Memory:");
+        alert.setTitle("Rules:");
+        alert.setContentText(message);
+        alert.show(); 
+    }
+    
     private static class ButtonHandler implements EventHandler<ActionEvent> {
 
         private int index;
