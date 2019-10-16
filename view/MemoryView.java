@@ -46,14 +46,12 @@ public class MemoryView extends VBox {
         
         for(int i=0; i<model.getGameSize(); i++){
             theButtons[i]= new Button("Card"+i);
-            theButtons[i].setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-			public void handle(ActionEvent event) {
-				System.out.println("Card is selected");
-			}
-                });
+            theButtons[i].setOnAction(new ButtonHandler(i));
             mainView.add(theButtons[i], 2, i);
-        }
+			}
+                ;
+            
+        
         
         MenuBar menuBar = createMenues(controller);
         this.getChildren().addAll(menuBar, mainView); // I am a VBox (this)
@@ -133,5 +131,18 @@ public class MemoryView extends VBox {
 
     private void updateFromModel() {
         this.currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static class ButtonHandler implements EventHandler<ActionEvent> {
+        private  int index;
+
+        public ButtonHandler(int i) {
+            this.index=i;
+        }
+
+        @Override
+        public void handle(ActionEvent event) {
+            model.chooseCard(index);
+        }
     }
 }
