@@ -133,13 +133,15 @@ public class MemoryView extends VBox {
 
         public ButtonHandler(int i, MemoryLogic model) {
             this.index = i;
-            model.chooseCard(index);
-            updateFromModel();
+            
+
         }
 
         @Override
         public void handle(ActionEvent event) {
-            System.out.println("Pressed button");            
+            System.out.println("Pressed button" + index);
+            model.chooseCard(index);
+            updateFromModel();
         }
     }
 }
