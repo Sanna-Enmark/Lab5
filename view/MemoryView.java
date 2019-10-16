@@ -142,7 +142,7 @@ public class MemoryView extends VBox {
 
         @Override
         public void handle(ActionEvent event) {
-            model.chooseCard(index);
+            System.out.println("Pressed button");
         }
     }
 }
