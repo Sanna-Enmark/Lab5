@@ -42,17 +42,24 @@ public class MemoryView extends VBox {
         this.model = model;
         this.alert = new Alert(Alert.AlertType.INFORMATION);
         MemoryController controller = new MemoryController(model, this);
-
+        
+        
+        // Load the image
+        
+   
         GridPane mainView = initMainView();
-
+   
         this.currentPlayer = new Label(model.getActivePlayer().toString());
         mainView.add(currentPlayer, 0, 0);
-
+        
+        displayHiddenCards(mainView);
+        
+        
         theButtons = new MemoryButton[model.getGameSize()];
 
         for (int i = 0; i < model.getGameSize(); i++) {
             theButtons[i] = new MemoryButton("Card " + model.getCard(i).getValue(), i);
-            mainView.add(theButtons[i], 1 + i, 2);
+            mainView.add(theButtons[i], 1 + i, 3);
         }
 
         addEventHandlers(controller);
@@ -157,5 +164,18 @@ public class MemoryView extends VBox {
         alert.setContentText(message);
         alert.show();
     }
+    
+    private void displayHiddenCards(GridPane mainView) {
+        Image HiddenCardImage = new Image("file:HiddenCard.png");
+        ImageView [] HiddenCardView = new ImageView[model.getGameSize()];
+        for (int i = 0; i < HiddenCardView.length ; i++) {
+            HiddenCardView[i] = new ImageView();
+            HiddenCardView[i].setImage(HiddenCardImage);
+            mainView.add(HiddenCardView[i], 1+i, 2);
+        }
+        
+    }
+    
+    
 
 }
