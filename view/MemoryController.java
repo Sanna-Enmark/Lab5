@@ -19,8 +19,9 @@ public class MemoryController {
 
     void handleCardSelectionEvent(ActionEvent event) {
         MemoryButton temp = (MemoryButton) event.getSource();
-        System.out.println("Card " + temp.getIndex());
+        System.out.println("Card index " + temp.getIndex() + " " + "Card value " + temp.getValue());
         model.chooseCard(temp.getIndex());
+        this.view.displayRevealedCard(temp.getIndex(),temp.getValue());
         this.view.updateFromModel();
     }
 

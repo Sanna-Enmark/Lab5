@@ -27,7 +27,7 @@ import model.MemoryLogic;
 
 /**
  *
- * @author senma
+ * @author Jesser&Sanna
  */
 public class MemoryView extends VBox {
 
@@ -37,28 +37,25 @@ public class MemoryView extends VBox {
 
     private Label currentPlayer;
     private MemoryButton[] theButtons;
+    private GridPane mainView;
 
     public MemoryView(MemoryLogic model) {
         this.model = model;
         this.alert = new Alert(Alert.AlertType.INFORMATION);
         MemoryController controller = new MemoryController(model, this);
-        
-        
-        // Load the image
-        
-   
-        GridPane mainView = initMainView();
-   
+
+        mainView = initMainView();
+
         this.currentPlayer = new Label(model.getActivePlayer().toString());
         mainView.add(currentPlayer, 0, 0);
-        
-        displayHiddenCards(mainView);
-        
+
+        displayAllHiddenCards();
         
         theButtons = new MemoryButton[model.getGameSize()];
 
         for (int i = 0; i < model.getGameSize(); i++) {
-            theButtons[i] = new MemoryButton("Card " + model.getCard(i).getValue(), i);
+            int CardValue = model.getCard(i).getValue();
+            theButtons[i] = new MemoryButton("Card " + CardValue, i, CardValue);
             mainView.add(theButtons[i], 1 + i, 3);
         }
 
@@ -164,18 +161,41 @@ public class MemoryView extends VBox {
         alert.setContentText(message);
         alert.show();
     }
-    
-    private void displayHiddenCards(GridPane mainView) {
+
+    void displayAllHiddenCards() {
         Image HiddenCardImage = new Image("file:HiddenCard.png");
-        ImageView [] HiddenCardView = new ImageView[model.getGameSize()];
-        for (int i = 0; i < HiddenCardView.length ; i++) {
+        ImageView[] HiddenCardView = new ImageView[model.getGameSize()];
+
+        for (int i = 0; i < HiddenCardView.length; i++) {
             HiddenCardView[i] = new ImageView();
             HiddenCardView[i].setImage(HiddenCardImage);
-            mainView.add(HiddenCardView[i], 1+i, 2);
+            mainView.add(HiddenCardView[i], 1 + i, 2);
+        }
+
+    }
+
+    void displayRevealedCard(int index, int value) {
+        Image[] CardImageNumber = new Image[model.getGameSize()/2];
+        CardImageNumber[0] = new Image("file:Card0.png");
+        CardImageNumber[1] = new Image("file:Card1.png");
+        CardImageNumber[2] = new Image("file:Card2.png");
+        CardImageNumber[3] = new Image("file:Card3.png");
+
+        ImageView[] CardImageNumberView = new ImageView[model.getGameSize()/2];
+
+        for (int i = 0; i < CardImageNumberView.length; i++) {
+            CardImageNumberView[i] = new ImageView();
+            CardImageNumberView[i].setImage(CardImageNumber[i]);
         }
         
+        if (value == 0 )
+            mainView.add(CardImageNumberView[0], index+1, 2);
+        else if (value == 1)
+            mainView.add(CardImageNumberView[1], index+1, 2);
+        else if (value == 2)
+            mainView.add(CardImageNumberView[2], index+1, 2);
+        else 
+            mainView.add(CardImageNumberView[3], index+1, 2);
     }
-    
-    
 
 }
