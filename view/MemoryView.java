@@ -17,6 +17,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -31,7 +32,7 @@ import model.MemoryLogic;
 public class MemoryView extends VBox {
 
     private MemoryLogic model;
-    
+
     private final Alert alert;
 
     private Label currentPlayer;
@@ -41,19 +42,19 @@ public class MemoryView extends VBox {
         this.model = model;
         this.alert = new Alert(Alert.AlertType.INFORMATION);
         MemoryController controller = new MemoryController(model, this);
-        
+
         GridPane mainView = initMainView();
 
         this.currentPlayer = new Label(model.getActivePlayer().toString());
-        mainView.add(currentPlayer, 0,0);
+        mainView.add(currentPlayer, 0, 0);
 
         theButtons = new MemoryButton[model.getGameSize()];
 
         for (int i = 0; i < model.getGameSize(); i++) {
-            theButtons[i] = new MemoryButton("Card " + model.getCard(i).getValue(),i);
-            mainView.add(theButtons[i], 1+i, 2);
+            theButtons[i] = new MemoryButton("Card " + model.getCard(i).getValue(), i);
+            mainView.add(theButtons[i], 1 + i, 2);
         }
-        
+
         addEventHandlers(controller);
         MenuBar menuBar = createMenues(controller);
         this.getChildren().addAll(menuBar, mainView); // I am a VBox (this)
@@ -73,20 +74,17 @@ public class MemoryView extends VBox {
     private void addEventHandlers(MemoryController controller) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         EventHandler<ActionEvent> CardSelection = new EventHandler<ActionEvent>() {
-            
+
             @Override
             public void handle(ActionEvent event) {
-            MemoryButton temp = (MemoryButton)event.getSource();
-            System.out.println("Card " + temp.getIndex());
-            model.chooseCard(temp.getIndex());
-            updateFromModel();
-            
+                controller.handleCardSelectionEvent(event);
+
             }
         };
-        for (Button i : theButtons){
+        for (Button i : theButtons) {
             i.setOnAction(CardSelection);
         }
-        
+
     }
 
     private MenuBar createMenues(MemoryController controller) {
@@ -108,8 +106,7 @@ public class MemoryView extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Resets game");
-                model.resetGame();
-                updateFromModel();
+                controller.handleResetEvent();
             }
         });
 
@@ -117,20 +114,20 @@ public class MemoryView extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Showing high scores");
-                showAlert("High Scores",model.getHighscore().toString());
+                showAlert("High Scores", model.getHighscore().toString());
 
             }
         });
 
         RulesItem.setOnAction(new EventHandler<ActionEvent>() {
-            
+
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Showing rules");
-                showAlert("Rules:","Active player chooses two cards. \n If the cards matches, the active player gets a point and gets to choose two new cards. \n If the two cards do not match the other player gets a turn");
+                showAlert("Rules:", "Active player chooses two cards. \n If the cards matches, the active player gets a point and gets to choose two new cards. \n If the two cards do not match the other player gets a turn");
             }
         });
-                
+
         QuitItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -146,36 +143,19 @@ public class MemoryView extends VBox {
         return menuBar;
     }
 
-    private void updateFromModel() {
+    void updateFromModel() {
         this.currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
-        if (model.checkForWinner() == true){
+        if (model.checkForWinner() == true) {
             System.out.println(model.getWinner().toString());
-            showAlert("Result","The winner is " + model.getWinner().toString());
+            showAlert("Result", "The winner is " + model.getWinner().toString());
         }
     }
 
     private void showAlert(String title, String message) {
-        
-        // TODO - setParent ot similar, to set position relative
-        // to main window
-        
         alert.setHeaderText("Memory:");
         alert.setTitle(title);
         alert.setContentText(message);
-        alert.show(); 
+        alert.show();
     }
-    
-    private static class MemoryButton extends Button {
-        private int index;
-        
-        public MemoryButton(String string, int i) {
-            super(string);
-            this.index = i;
-        }
-        
-        public int getIndex (){
-            return index;
-        }
 
-    }
 }
