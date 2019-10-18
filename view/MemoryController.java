@@ -126,7 +126,7 @@ public class MemoryController {
 
     void handleResetEvent() {
         model.resetGame();
-        this.view.updateFromModel();
+        view.setModel(model);
     }
 
 }
