@@ -44,7 +44,7 @@ public class Card implements Comparable<Card>{
         return state;
     }
     
-    @Override
+     @Override
     public String toString(){
         String info= "Value: " +this.value+ " Status: " +this.state;
         return info;

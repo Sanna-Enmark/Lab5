@@ -111,12 +111,25 @@ public class MemoryLogic {
                     player2.addPoint();
                 }
             } else {
-                ChosenCard.ChangeStateToHidden();
+                theCards.get(index).ChangeStateToRevealed();
+            }
+        }
+    }
+    
+    public void afterCheck(int index){
+                        int noOfRevealedCards=0;
+                        for(int i=0; i<theCards.size(); i++){
+                            if(theCards.get(index).getState()==CardState.REVEALED){
+                                noOfRevealedCards=noOfRevealedCards+1;
+                            }
+                        }
+                        if(noOfRevealedCards>1){
+                            ChosenCard.ChangeStateToHidden();
                 theCards.get(index).ChangeStateToHidden();
                 ChosenCard = null;
                 changeActivePlayer();
-            }
-        }
+                        }
+                
     }
 
     /*

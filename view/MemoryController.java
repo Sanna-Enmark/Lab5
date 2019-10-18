@@ -1,10 +1,17 @@
 package view;
 
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextInputDialog;
 import model.CardType;
+import model.MemoryIO;
 import model.MemoryLogic;
+import model.Player;
 
 /**
  *
@@ -14,10 +21,34 @@ public class MemoryController {
 
     private  MemoryLogic model;
     private  MemoryView view;
+    private MemoryIO IO;
 
-    public MemoryController(MemoryLogic model, MemoryView view) {
+    public MemoryController(MemoryLogic model, MemoryView view)  {
         this.model = model;
         this.view = view;
+        this.IO=new MemoryIO();        
+        loadFromFile();
+    }
+    
+    private void loadFromFile(){
+        if (fileExists()) {
+            try {
+                model.setHighScore(IO.deSerializeFromFile("HighScore"));
+            } catch (Exception ex) {
+                System.out.println("An exception was found");
+            }
+            System.out.println("Loading successful");
+        }
+    }
+    
+    private static boolean fileExists() {
+        Path filePath = Paths.get("C:\\Users\\senma\\Documents\\NetBeansProjects\\Lab5\\HighScore.txt");
+        if (Files.exists(filePath, new LinkOption[0])) {
+            return true;
+        } else {
+            System.out.println("File doesn't exist. A new file will be created");
+            return false;
+        }
     }
 
     void handleCardSelectionEvent(ActionEvent event) {
@@ -63,7 +94,19 @@ public class MemoryController {
     }
     
     void handleQuitEvent(){
+        saveToFile();
         Platform.exit();
+    }
+    
+    private void saveToFile() {
+        try {
+            IO.serializeToFile("HighScore", model.getHighscore());
+        } catch (Exception ex) {
+            System.out.println("An exception was found");
+            
+        }
+        System.out.println("Saving complete");
+
     }
 
     void handleResetEvent() {
