@@ -25,15 +25,43 @@ import model.CardState;
         }
         
         public void updateButtonView(){
-            if(state != CardState.HIDDEN){
+            
+            if(state == CardState.HIDDEN){
+                Image Image0= new Image("file:HiddenCard.png");
+                this.view.setImage(Image0);
+                super.setGraphic(view);
+            }
+            
+            else if (state != CardState.HIDDEN && this.value == 0){
                 Image Image0= new Image("file:Card0.png");
                 this.view.setImage(Image0);
                 super.setGraphic(view);
             }
+            
+            else if (state != CardState.HIDDEN && this.value == 1){
+                Image Image0= new Image("file:Card1.png");
+                this.view.setImage(Image0);
+                super.setGraphic(view);
+            }
+            
+            else if (state != CardState.HIDDEN && this.value == 2){
+                Image Image0= new Image("file:Card2.png");
+                this.view.setImage(Image0);
+                super.setGraphic(view);
+            }
+            
+            else if (state != CardState.HIDDEN && this.value == 3){
+                Image Image0= new Image("file:Card3.png");
+                this.view.setImage(Image0);
+                super.setGraphic(view);
+            }
+            
+            else {
+                
+            }
+            
         }
             
-         
-        
         public int getIndex (){
             return index;            
         }
@@ -43,6 +71,10 @@ import model.CardState;
         }
         public CardState getState (){
             return state;
+        }
+        
+        public void setState (CardState state1){
+            this.state = state1;
         }
 
     }
