@@ -22,9 +22,7 @@ public class MemoryController {
         MemoryButton temp = (MemoryButton) event.getSource();
         System.out.println("Card index " + temp.getIndex() + " " + "Card value " + temp.getValue());
         model.chooseCard(temp.getIndex());
-        if (temp.getState() != CardState.HIDDEN){
-            this.view.displayRevealedCard(temp.getIndex(),temp.getValue());
-        }    
+        temp.updateButtonView();
         this.view.updateFromModel();
     }
 

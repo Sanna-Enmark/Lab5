@@ -2,6 +2,7 @@
 package view;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.CardState;
 
@@ -13,16 +14,28 @@ import model.CardState;
         private int index;
         private int value; 
         private CardState state;
+        private ImageView view;
         
-        public MemoryButton(String string,ImageView view, int index0, int value0, CardState state0) {
-            super(string, view);
+        public MemoryButton(String string,ImageView view0, int index0, int value0, CardState state0) {
+            super(string, view0);            
             this.state = state0;
             this.index = index0;
             this.value = value0; 
+            this.view = view0;
         }
         
+        public void updateButtonView(){
+            if(state != CardState.HIDDEN){
+                Image Image0= new Image("file:Card0.png");
+                this.view.setImage(Image0);
+                super.setGraphic(view);
+            }
+        }
+            
+         
+        
         public int getIndex (){
-            return index;
+            return index;            
         }
         
         public int getValue (){
