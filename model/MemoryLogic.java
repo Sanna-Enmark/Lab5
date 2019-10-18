@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.ArrayList;
@@ -92,13 +91,11 @@ public class MemoryLogic {
      * selected by index is set to hidden, as well as changing active player
      */
     public void chooseCard(int index) {
-        
+
         if (this.ChosenCard == null && theCards.get(index).getState() == CardState.HIDDEN) {
             ChosenCard = theCards.get(index);
             ChosenCard.ChangeStateToRevealed();
-        }
- 
-        else if (theCards.get(index).getState() == CardState.HIDDEN) {
+        } else if (theCards.get(index).getState() == CardState.HIDDEN) {
             if (match(theCards.get(index))) {
                 ChosenCard.ChangeStateToMatched();
                 theCards.get(index).ChangeStateToMatched();
@@ -115,21 +112,21 @@ public class MemoryLogic {
             }
         }
     }
-    
-    public void afterCheck(int index){
-                        int noOfRevealedCards=0;
-                        for(int i=0; i<theCards.size(); i++){
-                            if(theCards.get(index).getState()==CardState.REVEALED){
-                                noOfRevealedCards=noOfRevealedCards+1;
-                            }
-                        }
-                        if(noOfRevealedCards>1){
-                            ChosenCard.ChangeStateToHidden();
-                theCards.get(index).ChangeStateToHidden();
-                ChosenCard = null;
-                changeActivePlayer();
-                        }
-                
+
+    public void afterCheck(int index) {
+        int noOfRevealedCards = 0;
+        for (int i = 0; i < theCards.size(); i++) {
+            if (theCards.get(index).getState() == CardState.REVEALED) {
+                noOfRevealedCards = noOfRevealedCards + 1;
+            }
+        }
+        if (noOfRevealedCards > 1) {
+            ChosenCard.ChangeStateToHidden();
+            theCards.get(index).ChangeStateToHidden();
+            ChosenCard = null;
+            changeActivePlayer();
+        }
+
     }
 
     /*
@@ -232,6 +229,3 @@ Meant to be used after every instance of chooseCard
     }
 
 }
-
-   
-
