@@ -231,9 +231,5 @@ public class MemoryView extends VBox {
         mainView.getChildren().remove(theButtons[button.getIndex()]);
         mainView.add(theButtons[button.getIndex()], 1 + button.getIndex(), 3);
     }
-    
-    public MemoryButton[] getTheButtons (){
-        return this.theButtons;
-    }
 
 }

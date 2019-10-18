@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextInputDialog;
-import model.CardState;
 import model.CardType;
 import model.MemoryIO;
 import model.MemoryLogic;
@@ -56,23 +55,9 @@ public class MemoryController {
         MemoryButton temp = (MemoryButton) event.getSource();
         System.out.println("Card index " + temp.getIndex() + " " + "Card value " + temp.getValue());
         model.chooseCard(temp.getIndex());
-        int chosenCardIndex = 100;
-        
         temp.setState(model.getCard(temp.getIndex()).getState());
         temp.updateButtonView();
         this.view.displayCard(temp);
-        this.model.afterCheck(temp.getIndex());
-        if (model.getChosenCard() != null){
-             chosenCardIndex = temp.getIndex();
-        }
-        
-        if (temp.getState() != CardState.MATCHED){
-            if(chosenCardIndex != 100){
-                this.view.getTheButtons()[chosenCardIndex].updateButtonView();
-                this.view.displayCard(this.view.getTheButtons()[chosenCardIndex]);
-            } 
-        }
-        System.out.println("Test " + temp.getState());
         this.view.updateFromModel();
     }
     
