@@ -59,7 +59,8 @@ public class MemoryController {
             model.chooseCard1(temp.getIndex());
         }
         else{
-            model.chooseCard2(temp.getIndex());            
+            model.chooseCard2(temp.getIndex());  
+            view.updateFromModel();
         }
         updateAllButtons();
         //Timer goes here

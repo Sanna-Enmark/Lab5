@@ -89,9 +89,9 @@ public class MemoryLogic {
     
 
     public void chooseCard1(int index) {
-        if (this.theCards.get(index).getState() == CardState.HIDDEN) {
-            this.ChosenCard = theCards.get(index);
+        if (this.theCards.get(index).getState() == CardState.HIDDEN) {            
             theCards.get(index).ChangeStateToRevealed();
+            this.ChosenCard = theCards.get(index);
         }
     }
     
