@@ -1,6 +1,7 @@
 package view;
 
 import javafx.event.ActionEvent;
+import model.CardState;
 import model.MemoryLogic;
 
 /**
@@ -21,7 +22,9 @@ public class MemoryController {
         MemoryButton temp = (MemoryButton) event.getSource();
         System.out.println("Card index " + temp.getIndex() + " " + "Card value " + temp.getValue());
         model.chooseCard(temp.getIndex());
-        this.view.displayRevealedCard(temp.getIndex(),temp.getValue());
+        if (temp.getState() != CardState.HIDDEN){
+            this.view.displayRevealedCard(temp.getIndex(),temp.getValue());
+        }    
         this.view.updateFromModel();
     }
 

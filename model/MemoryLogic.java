@@ -92,11 +92,13 @@ public class MemoryLogic {
      * selected by index is set to hidden, as well as changing active player
      */
     public void chooseCard(int index) {
+        
         if (this.ChosenCard == null && theCards.get(index).getState() == CardState.HIDDEN) {
             ChosenCard = theCards.get(index);
             ChosenCard.ChangeStateToRevealed();
-
-        } else if (theCards.get(index).getState() == CardState.HIDDEN) {
+        }
+ 
+        else if (theCards.get(index).getState() == CardState.HIDDEN) {
             if (match(theCards.get(index))) {
                 ChosenCard.ChangeStateToMatched();
                 theCards.get(index).ChangeStateToMatched();
@@ -217,3 +219,6 @@ Meant to be used after every instance of chooseCard
     }
 
 }
+
+   
+

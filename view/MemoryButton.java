@@ -2,6 +2,8 @@
 package view;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import model.CardState;
 
 /**
  *
@@ -10,9 +12,11 @@ import javafx.scene.control.Button;
    public class MemoryButton extends Button {
         private int index;
         private int value; 
+        private CardState state;
         
-        public MemoryButton(String string, int index0, int value0) {
-            super(string);
+        public MemoryButton(String string,ImageView view, int index0, int value0, CardState state0) {
+            super(string, view);
+            this.state = state0;
             this.index = index0;
             this.value = value0; 
         }
@@ -24,6 +28,8 @@ import javafx.scene.control.Button;
         public int getValue (){
             return value;
         }
-        
+        public CardState getState (){
+            return state;
+        }
 
     }

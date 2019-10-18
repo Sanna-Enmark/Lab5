@@ -23,6 +23,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import model.Card;
+import model.CardState;
 import model.MemoryLogic;
 
 /**
@@ -49,13 +51,18 @@ public class MemoryView extends VBox {
         this.currentPlayer = new Label(model.getActivePlayer().toString());
         mainView.add(currentPlayer, 0, 0);
 
-        displayAllHiddenCards();
+        //displayAllHiddenCards();
+        
+        ImageView[] HiddenCardView = new ImageView[model.getGameSize()];
+        initHiddenImageView(HiddenCardView);
         
         theButtons = new MemoryButton[model.getGameSize()];
 
         for (int i = 0; i < model.getGameSize(); i++) {
-            int CardValue = model.getCard(i).getValue();
-            theButtons[i] = new MemoryButton("Card " + CardValue, i, CardValue);
+            Card temp = model.getCard(i);
+            int CardValue = temp.getValue();
+            CardState state = temp.getState();
+            theButtons[i] = new MemoryButton("Card " + CardValue,HiddenCardView[i], i, CardValue,state );
             mainView.add(theButtons[i], 1 + i, 3);
         }
 
@@ -162,14 +169,13 @@ public class MemoryView extends VBox {
         alert.show();
     }
 
-    void displayAllHiddenCards() {
+    void initHiddenImageView(ImageView[] HiddenCardView ) {
         Image HiddenCardImage = new Image("file:HiddenCard.png");
-        ImageView[] HiddenCardView = new ImageView[model.getGameSize()];
 
         for (int i = 0; i < HiddenCardView.length; i++) {
             HiddenCardView[i] = new ImageView();
             HiddenCardView[i].setImage(HiddenCardImage);
-            mainView.add(HiddenCardView[i], 1 + i, 2);
+            //mainView.add(HiddenCardView[i], 1 + i, 2);
         }
 
     }
