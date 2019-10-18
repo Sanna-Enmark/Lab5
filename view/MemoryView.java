@@ -230,7 +230,6 @@ public class MemoryView extends VBox {
     void displayCard(MemoryButton button) {
         mainView.getChildren().remove(theButtons[button.getIndex()]);
         mainView.add(theButtons[button.getIndex()], 1 + button.getIndex(), 3);
-        
     }
 
 }
