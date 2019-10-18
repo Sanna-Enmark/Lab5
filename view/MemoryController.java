@@ -89,11 +89,11 @@ public class MemoryController {
         TextInputDialog p2=new TextInputDialog("Player 2");
         p2.setHeaderText("Enter the name of Player 2:");
         p2.showAndWait();
-        String Player2=new String(p2.getEditor().getText());
+        String Player2=p2.getEditor().getText();
         TextInputDialog p1=new TextInputDialog("Player 1");
         p1.setHeaderText("Enter the name of Player 1:");
         p1.showAndWait();
-        String Player1=new String(p2.getEditor().getText());
+        String Player1=p2.getEditor().getText();
         
         MemoryLogic newGame=new MemoryLogic(gamesize, CardType.NUMBER,Player1,Player2);
         this.model=newGame;
