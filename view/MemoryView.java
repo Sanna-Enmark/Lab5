@@ -23,7 +23,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import model.CardState;
 import model.MemoryLogic;
 
 /**
@@ -149,13 +148,11 @@ public class MemoryView extends VBox {
     }
 
     void updateFromModel() {
-        hideTheCards();
         this.currentPlayer.setText(model.getActivePlayer().toString());//To change body of generated methods, choose Tools | Templates.
         if (model.checkForWinner() == true) {
             System.out.println(model.getWinner().toString());
             showAlert("Result", "The winner is " + model.getWinner().toString());
         }
-        
     }
 
     private void showAlert(String title, String message) {
@@ -193,20 +190,5 @@ public class MemoryView extends VBox {
         
         mainView.add(CardImageNumberView[value], index+1, 2);
     }
-    
-    void hideTheCards() {
-        Image HiddenCardImage = new Image("file:HiddenCard.png");
-        ImageView HiddenCardView = new ImageView();
-
-        for (int i = 0; i < model.getGameSize(); i++) {
-            if (model.getCard(i).getState() == CardState.HIDDEN){
-                HiddenCardView.setImage(HiddenCardImage);
-                mainView.add(HiddenCardView, 1 + i, 2);
-            }
-            
-        }
-
-    }
-    
 
 }
