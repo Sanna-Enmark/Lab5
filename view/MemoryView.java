@@ -35,11 +35,41 @@ public class MemoryView extends VBox {
 
     private MemoryLogic model;
 
-    private final Alert alert;
+    private Alert alert;
 
     private Label currentPlayer;
     private MemoryButton[] theButtons;
     private GridPane mainView;
+
+    public void setModel(MemoryLogic model) {
+        this.model = model;
+        this.getChildren().clear();
+
+        this.alert = new Alert(Alert.AlertType.INFORMATION);
+        MemoryController controller = new MemoryController(model, this);
+
+        mainView = initMainView();
+
+        this.currentPlayer = new Label(model.getActivePlayer().toString());
+        mainView.add(currentPlayer, 0, 0);
+
+        ImageView[] HiddenCardView = new ImageView[model.getGameSize()];
+        initHiddenImageView(HiddenCardView);
+
+        theButtons = new MemoryButton[model.getGameSize()];
+
+        for (int i = 0; i < model.getGameSize(); i++) {
+            Card temp = model.getCard(i);
+            int CardValue = temp.getValue();
+            CardState state = temp.getState();
+            theButtons[i] = new MemoryButton("Card " + CardValue, HiddenCardView[i], i, CardValue, state);
+            mainView.add(theButtons[i], 1 + i, 3);
+        }
+
+        addEventHandlers(controller);
+        MenuBar menuBar = createMenues(controller);
+        this.getChildren().addAll(menuBar, mainView);
+    }
 
     public MemoryView(MemoryLogic model) {
         this.model = model;
@@ -52,17 +82,16 @@ public class MemoryView extends VBox {
         mainView.add(currentPlayer, 0, 0);
 
         //displayAllHiddenCards();
-        
         ImageView[] HiddenCardView = new ImageView[model.getGameSize()];
         initHiddenImageView(HiddenCardView);
-        
+
         theButtons = new MemoryButton[model.getGameSize()];
 
         for (int i = 0; i < model.getGameSize(); i++) {
             Card temp = model.getCard(i);
             int CardValue = temp.getValue();
             CardState state = temp.getState();
-            theButtons[i] = new MemoryButton("Card " + CardValue,HiddenCardView[i], i, CardValue,state );
+            theButtons[i] = new MemoryButton("Card " + CardValue, HiddenCardView[i], i, CardValue, state);
             mainView.add(theButtons[i], 1 + i, 3);
         }
 
@@ -110,6 +139,7 @@ public class MemoryView extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Starting new game");
+                controller.handeNewGameEvent();
             }
         });
 
@@ -125,7 +155,7 @@ public class MemoryView extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Showing high scores");
-                showAlert("High Scores", model.getHighscore().toString());
+                controller.handleHighScoreEvent();
 
             }
         });
@@ -135,14 +165,14 @@ public class MemoryView extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Showing rules");
-                showAlert("Rules:", "Active player chooses two cards. \n If the cards matches, the active player gets a point and gets to choose two new cards. \n If the two cards do not match the other player gets a turn");
+                controller.handleRulesEvent();
             }
         });
 
         QuitItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Platform.exit();
+                controller.handleQuitEvent();
             }
         });
         Menu fileMenu = new Menu("File");
@@ -162,14 +192,14 @@ public class MemoryView extends VBox {
         }
     }
 
-    private void showAlert(String title, String message) {
+    public void showAlert(String title, String message) {
         alert.setHeaderText("Memory:");
         alert.setTitle(title);
         alert.setContentText(message);
         alert.show();
     }
 
-    void initHiddenImageView(ImageView[] HiddenCardView ) {
+    void initHiddenImageView(ImageView[] HiddenCardView) {
         Image HiddenCardImage = new Image("file:HiddenCard.png");
 
         for (int i = 0; i < HiddenCardView.length; i++) {
@@ -181,20 +211,20 @@ public class MemoryView extends VBox {
     }
 
     void displayRevealedCard(int index, int value) {
-        Image[] CardImageNumber = new Image[model.getGameSize()/2];
+        Image[] CardImageNumber = new Image[model.getGameSize() / 2];
         CardImageNumber[0] = new Image("file:Card0.png");
         CardImageNumber[1] = new Image("file:Card1.png");
         CardImageNumber[2] = new Image("file:Card2.png");
         CardImageNumber[3] = new Image("file:Card3.png");
 
-        ImageView[] CardImageNumberView = new ImageView[model.getGameSize()/2];
+        ImageView[] CardImageNumberView = new ImageView[model.getGameSize() / 2];
 
         for (int i = 0; i < CardImageNumberView.length; i++) {
             CardImageNumberView[i] = new ImageView();
             CardImageNumberView[i].setImage(CardImageNumber[i]);
         }
-        
-        mainView.add(CardImageNumberView[value], index+1, 2);
+
+        mainView.add(CardImageNumberView[value], index + 1, 2);
     }
 
 }
