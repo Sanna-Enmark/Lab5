@@ -22,6 +22,7 @@ public class MemoryController {
     private  MemoryLogic model;
     private  MemoryView view;
     private MemoryIO IO;
+    
 
     public MemoryController(MemoryLogic model, MemoryView view)  {
         this.model = model;
@@ -54,12 +55,28 @@ public class MemoryController {
     void handleCardSelectionEvent(ActionEvent event) {
         MemoryButton temp = (MemoryButton) event.getSource();
         System.out.println("Card index " + temp.getIndex() + " " + "Card value " + temp.getValue());
-        model.chooseCard(temp.getIndex());
-        temp.setState(model.getCard(temp.getIndex()).getState());
-        temp.updateButtonView();
-        this.view.displayCard(temp);
+        if(model.getChosenCard()==null){
+            model.chooseCard1(temp.getIndex());
+        }
+        else{
+            model.chooseCard2(temp.getIndex());            
+        }
+        updateAllButtons();
+        //Timer goes here
+        model.hideRevealedCards();
+        updateAllButtons();
         this.view.updateFromModel();
     }
+    
+    private void updateAllButtons(){
+        for(int i=0; i<view.getTheButtons().length;i++){
+            view.getTheButtons()[i].setState(model.getCard(i).getState());
+            view.getTheButtons()[i].updateButtonView();
+            this.view.displayCard(view.getTheButtons()[i]);
+        }
+    }
+    
+    
     
     void handeNewGameEvent(){
         int gamesize=1;

@@ -57,7 +57,14 @@ public class TestMain {
         if(game.checkIfHidden(game.getCard(choice))){
             System.out.println(game.getCard(choice).toString());
         }
-        game.chooseCard(choice);
+        game.chooseCard1(choice);
+        System.out.println("Enter the number of the card you would like to check (1-"+game.getGameSize()+"): ");
+        choice=Integer.parseInt(scanLine())-1;
+        if(game.checkIfHidden(game.getCard(choice))){
+            System.out.println(game.getCard(choice).toString());
+        }
+        game.chooseCard2(choice);
+        game.hideRevealedCards();
         game.checkForWinner();
         if(game.getGameState()==GameState.INACTIVE){
             System.out.println(game.getWinner().toString()+ " won!");

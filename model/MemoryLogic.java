@@ -83,19 +83,26 @@ public class MemoryLogic {
     }
 
     /**
-     * Main logic of the game. Checks if chosencard is null, nothing happens if
-     * the state of the selected card isn't hidden Increases active players
-     * points if chosencard isn't null and the card selected by index is of the
-     * same value, as well as sets the two cards state to matched if the card
-     * selected by index does not have the same value chosencard and card
-     * selected by index is set to hidden, as well as changing active player
+     * The first card a player chooses. ChosenCard is set to the card for comparison in chooseCard2
+     * @param index
      */
-    public void chooseCard(int index) {
+    
 
-        if (this.ChosenCard == null && theCards.get(index).getState() == CardState.HIDDEN) {
-            ChosenCard = theCards.get(index);
-            ChosenCard.ChangeStateToRevealed();
-        } else if (theCards.get(index).getState() == CardState.HIDDEN) {
+    public void chooseCard1(int index) {
+        if (this.theCards.get(index).getState() == CardState.HIDDEN) {
+            this.ChosenCard = theCards.get(index);
+            theCards.get(index).ChangeStateToRevealed();
+        }
+    }
+    
+    /**
+     * Second card chosen. If matched, the active player gains a point, and the card state is changed to matched.
+     * If not matched, the second card is set to revealed and the active player is changed
+     * @param index 
+     */
+
+    public void chooseCard2(int index) {
+        if (this.theCards.get(index).getState() == CardState.HIDDEN) {
             if (match(theCards.get(index))) {
                 ChosenCard.ChangeStateToMatched();
                 theCards.get(index).ChangeStateToMatched();
@@ -109,27 +116,31 @@ public class MemoryLogic {
                 }
             } else {
                 theCards.get(index).ChangeStateToRevealed();
-            }
-        }
-    }
-
-    public void afterCheck(int index) {
-
-        if (match(theCards.get(index)) == false) {
-            int noOfRevealedCards = 0;
-            for (int i = 0; i < theCards.size(); i++) {
-                if (theCards.get(index).getState() == CardState.REVEALED) {
-                    noOfRevealedCards = noOfRevealedCards + 1;
-                }
-            }
-            if (noOfRevealedCards > 1) {
-                ChosenCard.ChangeStateToHidden();
-                theCards.get(index).ChangeStateToHidden();
                 ChosenCard = null;
                 changeActivePlayer();
             }
         }
+    }
+    
+    /**
+     * Meant to be called after chooseCard2. Scans for card with Cardstate revlealed and sets it to hidden.
+     */
 
+    public void hideRevealedCards() {
+        int noOfRevealedCards=0;
+        for (int i = 0; i < this.gameSize; i++) {
+            if (theCards.get(i).getState() == CardState.REVEALED) {
+                noOfRevealedCards=noOfRevealedCards+1;
+            }
+        }
+        if(noOfRevealedCards>1){
+            for (int i = 0; i < this.gameSize; i++) {
+            if (theCards.get(i).getState() == CardState.REVEALED) {
+                theCards.get(i).ChangeStateToHidden();
+            }
+        }
+        }
+        
     }
 
     /*
