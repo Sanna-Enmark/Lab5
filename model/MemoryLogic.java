@@ -114,6 +114,7 @@ public class MemoryLogic {
     }
 
     public void afterCheck(int index) {
+
         if(match(theCards.get(index))==false){
             int noOfRevealedCards = 0;
         for (int i = 0; i < theCards.size(); i++) {
@@ -128,7 +129,6 @@ public class MemoryLogic {
             changeActivePlayer();
         }
         }       
-
     }
 
     /*
