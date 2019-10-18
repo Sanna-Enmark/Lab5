@@ -23,6 +23,7 @@ public class MemoryController {
         System.out.println("Card index " + temp.getIndex() + " " + "Card value " + temp.getValue());
         model.chooseCard(temp.getIndex());
         temp.updateButtonView();
+        this.view.displayCard(temp);
         this.view.updateFromModel();
     }
 
