@@ -87,20 +87,20 @@ public class MemoryController {
     
     void handeNewGameEvent(){
         int gamesize=1;
-        while(gamesize%2!=0||gamesize>16){
+        while(gamesize%2!=0||gamesize>10 ){
          TextInputDialog size=new TextInputDialog("GameSize:");
         size.setHeaderText("Enter the number of cards you would like to play with (Maximum 10):");
         size.showAndWait();
         gamesize=Integer.parseInt(size.getEditor().getText());   
         }        
-        TextInputDialog p2=new TextInputDialog("Player 2");
-        p2.setHeaderText("Enter the name of Player 2:");
-        p2.showAndWait();
-        String Player2=p2.getEditor().getText();
         TextInputDialog p1=new TextInputDialog("Player 1");
         p1.setHeaderText("Enter the name of Player 1:");
         p1.showAndWait();
-        String Player1=p2.getEditor().getText();
+        String Player1=p1.getEditor().getText();
+        TextInputDialog p2=new TextInputDialog("Player 2");
+        p2.setHeaderText("Enter the name of Player 2:");
+        p2.showAndWait();
+        String Player2=p2.getEditor().getText();       
         
         MemoryLogic newGame=new MemoryLogic(gamesize, CardType.NUMBER,Player1,Player2);
         this.model=newGame;
@@ -110,7 +110,11 @@ public class MemoryController {
     }
     
     void handleHighScoreEvent(){
-        view.showAlert("High Scores", model.getHighscore().toString());
+        String highscoreString=new String();
+        for(int i=0; i<model.getHighscore().size();i++){
+            highscoreString=highscoreString+model.getHighscore().get(i).toString()+"\n";
+        }
+        view.showAlert("High Scores", highscoreString);
     }
     
     void handleRulesEvent(){
