@@ -116,6 +116,7 @@ public class MemoryLogic {
                     player2.addPoint();
                 }
             } else {
+                System.out.println("Changing active player");
                 theCards.get(index).ChangeStateToRevealed();
                 ChosenCard = null;
                 changeActivePlayer();
