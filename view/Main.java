@@ -21,7 +21,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         // create model, view and controller, and tie them together
-        MemoryLogic model = new MemoryLogic(8, CardType.NUMBER, "Jesser", "Sanna");
+        MemoryLogic model = new MemoryLogic(10, CardType.NUMBER, "Jesser", "Sanna");
         MemoryView view = new MemoryView(model); // also creates the controller
 
         // create the window, add the view, and show it

@@ -56,6 +56,12 @@ import model.CardState;
                 super.setGraphic(view);
             }
             
+            else if (state != CardState.HIDDEN && this.value == 4){
+                Image Image0= new Image("file:Card4.png");
+                this.view.setImage(Image0);
+                super.setGraphic(view);
+            }
+            
             else {
                 
             }

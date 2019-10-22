@@ -87,9 +87,9 @@ public class MemoryController {
     
     void handeNewGameEvent(){
         int gamesize=1;
-        while(gamesize%2!=0){
+        while(gamesize%2!=0||gamesize>16){
          TextInputDialog size=new TextInputDialog("GameSize:");
-        size.setHeaderText("Enter the number of cards you would like to play with:");
+        size.setHeaderText("Enter the number of cards you would like to play with (Maximum 10):");
         size.showAndWait();
         gamesize=Integer.parseInt(size.getEditor().getText());   
         }        
@@ -105,6 +105,7 @@ public class MemoryController {
         MemoryLogic newGame=new MemoryLogic(gamesize, CardType.NUMBER,Player1,Player2);
         this.model=newGame;
         view.setModel(newGame);
+        view.updateFromModel();
         
     }
     

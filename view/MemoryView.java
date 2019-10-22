@@ -5,6 +5,8 @@
  */
 package view;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -117,7 +119,11 @@ public class MemoryView extends VBox {
 
             @Override
             public void handle(ActionEvent event) {
-                controller.handleCardSelectionEvent(event);
+                try {
+                    controller.handleCardSelectionEvent(event);
+                } catch (InterruptedException ex) {
+                    System.out.println("Timer was interrupted");
+                }
 
             }
         };
