@@ -5,6 +5,7 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextInputDialog;
@@ -22,6 +23,8 @@ public class MemoryController {
     private  MemoryLogic model;
     private  MemoryView view;
     private MemoryIO IO;
+    private TimeUnit timeUnit;
+    
     
 
     public MemoryController(MemoryLogic model, MemoryView view)  {
@@ -52,18 +55,21 @@ public class MemoryController {
         }
     }
 
-    void handleCardSelectionEvent(ActionEvent event) {
+    void handleCardSelectionEvent(ActionEvent event) throws InterruptedException {
         MemoryButton temp = (MemoryButton) event.getSource();
         System.out.println("Card index " + temp.getIndex() + " " + "Card value " + temp.getValue());
         if(model.getChosenCard()==null){
             model.chooseCard1(temp.getIndex());
+            updateAllButtons();
+            this.view.updateFromModel();
         }
         else{
             model.chooseCard2(temp.getIndex());  
             view.updateFromModel();
+            updateAllButtons();
+            this.view.updateFromModel();
+            timeUnit.SECONDS.sleep(1);            
         }
-        updateAllButtons();
-        //Timer goes here
         model.hideRevealedCards();
         updateAllButtons();
         this.view.updateFromModel();
