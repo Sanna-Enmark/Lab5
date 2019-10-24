@@ -93,7 +93,7 @@ public class MemoryView extends VBox {
             Card temp = model.getCard(i);
             int CardValue = temp.getValue();
             CardState state = temp.getState();
-            theButtons[i] = new MemoryButton("Card " + CardValue, HiddenCardView[i], i, CardValue, state);
+            theButtons[i] = new MemoryButton("", HiddenCardView[i], i, CardValue, state);
             mainView.add(theButtons[i], 1 + i, 3);
         }
 

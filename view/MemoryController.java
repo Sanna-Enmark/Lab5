@@ -64,14 +64,14 @@ public class MemoryController {
             this.view.updateFromModel();
         }
         else{
-            model.chooseCard2(temp.getIndex());  
-            view.updateFromModel();
-            updateAllButtons();
+            model.chooseCard2(temp.getIndex());
+            updateAllButtons();          
             this.view.updateFromModel();
-            timeUnit.SECONDS.sleep(1);            
+            //timeUnit.SECONDS.sleep(1);  
+            
         }
         model.hideRevealedCards();
-        updateAllButtons();
+        //updateAllButtons();
         this.view.updateFromModel();
     }
     

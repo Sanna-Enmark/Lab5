@@ -119,7 +119,7 @@ public class MemoryLogic {
                 System.out.println("Changing active player");
                 theCards.get(index).ChangeStateToRevealed();
                 ChosenCard = null;
-                changeActivePlayer();
+                changeActivePlayer(); 
             }
         }
     }
