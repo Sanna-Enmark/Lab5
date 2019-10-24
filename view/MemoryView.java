@@ -41,7 +41,7 @@ public class MemoryView extends VBox {
 
     private Label currentPlayer;
     private MemoryButton[] theButtons;
-    private GridPane mainView;
+    public GridPane mainView;
 
     public void setModel(MemoryLogic model) {
         this.model = model;
@@ -64,9 +64,18 @@ public class MemoryView extends VBox {
             Card temp = model.getCard(i);
             int CardValue = temp.getValue();
             CardState state = temp.getState();
-            theButtons[i] = new MemoryButton("Card " + CardValue, HiddenCardView[i], i, CardValue, state);
-            mainView.add(theButtons[i], 1 + i, 3);
+            theButtons[i] = new MemoryButton("", HiddenCardView[i], i, CardValue, state);
+            //mainView.add(theButtons[i], 1 + i, 3);
         }
+        
+         for (int i = 0; i < model.getGameSize()/2; i++){
+            mainView.add(theButtons[i], 1 + i,3);
+        } 
+        int j = 0;
+        for (int i = model.getGameSize()/2; i < model.getGameSize() ; i++){
+            mainView.add(theButtons[i],j+1,4);
+            j++;        
+        } 
 
         addEventHandlers(controller);
         MenuBar menuBar = createMenues(controller);
@@ -94,9 +103,18 @@ public class MemoryView extends VBox {
             int CardValue = temp.getValue();
             CardState state = temp.getState();
             theButtons[i] = new MemoryButton("", HiddenCardView[i], i, CardValue, state);
-            mainView.add(theButtons[i], 1 + i, 3);
+            //mainView.add(theButtons[i], 1 + i, 10);
         }
-
+        
+        for (int i = 0; i < model.getGameSize()/2; i++){
+            mainView.add(theButtons[i], 1 + i,3);
+        } 
+        int j = 0;
+        for (int i = model.getGameSize()/2; i < model.getGameSize() ; i++){
+            mainView.add(theButtons[i],j+1,4);
+            j++;        
+        } 
+        
         addEventHandlers(controller);
         MenuBar menuBar = createMenues(controller);
         this.getChildren().addAll(menuBar, mainView); // I am a VBox (this)
